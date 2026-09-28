@@ -24,4 +24,9 @@ class Database {
         }
         return self::$instance->conn;
     }
+
+    // Alias method added so both projects work seamlessly
+    public static function getConnection() {
+        return self::getInstance();
+    }
 }

@@ -4,9 +4,13 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 // Protection: redirect if not logged in
 if (!isset($_SESSION['user_id'])) {
-    header('Location: eduflow_auth_index.php?action=login');
+    header('Location: /login');
     exit;
 }
+
+// Current route checking for active menu state
+$currentUri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+$currentAction = $_GET['action'] ?? '';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -66,8 +70,8 @@ if (!isset($_SESSION['user_id'])) {
         </div>
         <div class="search-box">Type / to search</div>
         <div class="user-nav">
-            <span>Welcome, <strong><?php echo htmlspecialchars($_SESSION['username'] ?? 'User'); ?></strong></span>
-            <a href="eduflow_auth_index.php?action=logout" class="btn-logout">Sign Out</a>
+            <span>Welcome, <strong><?php echo htmlspecialchars($_SESSION['user_name'] ?? $_SESSION['username'] ?? 'User'); ?></strong></span>
+            <a href="/logout" class="btn-logout">Sign Out</a>
         </div>
     </header>
 
@@ -76,18 +80,17 @@ if (!isset($_SESSION['user_id'])) {
         
         <!-- Collapsible Menu Drawer -->
         <aside class="sidebar" id="sidebarNav">
-            <a href="eduflow_auth_index.php?action=dashboard" class="sidebar-item active">🏠 Home</a>
+            <a href="/" class="sidebar-item <?php echo ($currentUri === '/' && $currentAction !== 'dashboard') ? 'active' : ''; ?>">🏠 Home</a>
+            <a href="/dashboard" class="sidebar-item <?php echo ($currentUri === '/dashboard' || $currentAction === 'dashboard') ? 'active' : ''; ?>">📊 Dashboard</a>
             
             <div class="sidebar-section-title">Administration</div>
-            <a href="#" class="sidebar-item" onclick="return false;">👤 User Role</a>
-            <a href="#" class="sidebar-item" onclick="return false;">⚙️ Role Management</a>
-
-           
+            <a href="/users" class="sidebar-item <?php echo ($currentUri === '/users') ? 'active' : ''; ?>">👤 User Role</a>
+            <a href="/users" class="sidebar-item">⚙️ Role Management</a>
         </aside>
 
         <!-- Main Content Panel -->
         <main class="main-content">
-            <h1 class="content-header">Home</h1>
+            <h1 class="content-header">Dashboard</h1>
 
             <div class="prompt-card">
                 <div class="prompt-input">Ask anything or select accreditation context...</div>

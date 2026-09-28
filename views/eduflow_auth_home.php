@@ -32,10 +32,10 @@
 <body>
 
     <header>
-        <a href="eduflow_auth_index.php?action=home" class="logo">IAQMS Enterprise</a>
+        <a href="/" class="logo">IAQMS Enterprise</a>
         <div class="nav-links">
-            <a href="eduflow_auth_index.php?action=login" class="btn-signin">Sign in</a>
-            <a href="eduflow_auth_index.php?action=register" class="btn-signup">Sign up</a>
+            <a href="/login" class="btn-signin">Sign in</a>
+            <a href="/register" class="btn-signup">Sign up</a>
         </div>
     </header>
 
@@ -43,11 +43,10 @@
         <h1>Institutional Accreditation & Quality Assurance System</h1>
         <p>Streamline compliance workflows, centralize audit documentation, and simplify institutional quality management on a unified platform.</p>
         
-        <form action="eduflow_auth_index.php" method="GET" class="cta-box">
-            <input type="hidden" name="action" value="register">
-            <input type="email" name="email" placeholder="Enter your institutional email..." required>
-            <button type="submit">Sign up for IAQMS</button>
-        </form>
+       <form action="/register" method="GET" class="cta-box">
+    <input type="email" name="email" placeholder="Enter your institutional email..." required>
+    <button type="submit">Sign up for IAQMS</button>
+</form>
     </section>
 
 </body>

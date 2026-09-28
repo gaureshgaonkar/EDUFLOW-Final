@@ -40,19 +40,21 @@ CREATE TABLE `password_resets` (
 -- Table structure for table `roles`
 --
 
-CREATE TABLE `roles` (
-  `id` int(11) NOT NULL,
-  `name` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
+CREATE TABLE IF NOT EXISTS roles (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(50) NOT NULL UNIQUE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
 --
 -- Dumping data for table `roles`
 --
 
-INSERT INTO `roles` (`id`, `name`) VALUES
-(2, 'Faculty'),
-(3, 'Student'),
-(1, 'System Administrator');
+INSERT INTO roles (id, name) VALUES 
+(1, 'System Administrator'),
+(2, 'Institution Administrator'),
+(3, 'Faculty'),
+(4, 'Student')
+ON DUPLICATE KEY UPDATE name=VALUES(name);
 
 -- --------------------------------------------------------
 
@@ -60,22 +62,31 @@ INSERT INTO `roles` (`id`, `name`) VALUES
 -- Table structure for table `users`
 --
 
-CREATE TABLE `users` (
-  `id` int(11) NOT NULL,
-  `email` varchar(191) NOT NULL,
-  `password` varchar(255) NOT NULL,
-  `role_id` int(11) NOT NULL,
-  `is_active` tinyint(1) DEFAULT 1,
-  `created_at` datetime DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
+CREATE TABLE IF NOT EXISTS users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    role_id INT NOT NULL,
+    full_name VARCHAR(100) NOT NULL,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    password_hash VARCHAR(255) NOT NULL,
+    status ENUM('active', 'inactive') DEFAULT 'active',
+    phone VARCHAR(20) NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (role_id) REFERENCES roles(id) ON DELETE CASCADE
+);
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `email`, `password`, `role_id`, `is_active`, `created_at`) VALUES
-(1, 'tanvi33@gmail.com', '$2y$10$pzi4mSwBpbRGd4oIZZnmY.KUG9QtO.IbaQjpfhf5soFuSZkbbpNPK', 1, 1, '2026-09-04 12:55:39');
-
+INSERT INTO users (id, role_id, full_name, email, password_hash, status)
+VALUES (
+    1,
+    1, 
+    'System Admin', 
+    'admin@eduflow.edu', 
+    '$2y$10$e0MYzXyjpJS7Pd0RVvHwHe1g.n1900pA4/B3.L8DkL3mKqK9rT8C6', 
+    'active'
+) ON DUPLICATE KEY UPDATE email=VALUES(email);
 --
 -- Indexes for dumped tables
 --
