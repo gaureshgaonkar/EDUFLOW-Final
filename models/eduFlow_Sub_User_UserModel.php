@@ -6,11 +6,7 @@ class eduFlow_Sub_User_UserModel {
     private PDO $db;
 
     public function __construct() {
-        // Option A: If Database class uses getConnection()
         $this->db = Database::getConnection();
-
-        // Option B: If Database class uses a Singleton or constructor instance (e.g. $db = new Database(); $this->db = $db->connect();)
-        // Adjust the line above to match how config/Database.php returns its PDO instance.
     }
 
     public function getAllUsers(): array {
@@ -28,15 +24,16 @@ class eduFlow_Sub_User_UserModel {
     }
 
     public function createUser(array $data): bool {
-        $sql = "INSERT INTO users (role_id, full_name, email, password_hash, phone) 
-                VALUES (:role_id, :full_name, :email, :password_hash, :phone)";
+        // Corrected columns matching your actual database schema
+        $sql = "INSERT INTO users (role_id, username, email, password, full_name) 
+                VALUES (:role_id, :username, :email, :password, :full_name)";
         $stmt = $this->db->prepare($sql);
         return $stmt->execute([
-            'role_id'       => $data['role_id'],
-            'full_name'     => $data['full_name'],
-            'email'         => $data['email'],
-            'password_hash' => password_hash($data['password'], PASSWORD_BCRYPT),
-            'phone'         => $data['phone'] ?? null,
+            'role_id'   => $data['role_id'],
+            'username'  => $data['username'] ?? $data['email'], // Fallback to email if username isn't passed separately
+            'email'     => $data['email'],
+            'password'  => password_hash($data['password'], PASSWORD_BCRYPT), // Matches 'password' column
+            'full_name' => $data['full_name'], // Matches 'full_name' column
         ]);
     }
 
@@ -47,8 +44,8 @@ class eduFlow_Sub_User_UserModel {
 
     public function resetPassword(int $id, string $newPassword): bool {
         $hash = password_hash($newPassword, PASSWORD_BCRYPT);
-        $stmt = $this->db->prepare("UPDATE users SET password_hash = :hash WHERE id = :id");
-        return $stmt->execute(['hash' => $hash, 'id' => $id]);
+        $stmt = $this->db->prepare("UPDATE users SET password = :password WHERE id = :id");
+        return $stmt->execute(['password' => $hash, 'id' => $id]);
     }
 
     public function assignRole(int $id, int $roleId): bool {
@@ -57,11 +54,10 @@ class eduFlow_Sub_User_UserModel {
     }
 
     public function updateProfile(int $id, array $data): bool {
-        $sql = "UPDATE users SET full_name = :full_name, phone = :phone WHERE id = :id";
+        $sql = "UPDATE users SET full_name = :full_name WHERE id = :id";
         $stmt = $this->db->prepare($sql);
         return $stmt->execute([
             'full_name' => $data['full_name'],
-            'phone'     => $data['phone'],
             'id'        => $id
         ]);
     }
