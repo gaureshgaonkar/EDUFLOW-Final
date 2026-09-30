@@ -21,16 +21,21 @@ $uriPath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 $isPublicRoute = in_array($uriPath, ['/', '/login', '/register', '/logout']) || 
                  in_array($_GET['action'] ?? '', ['home', 'login', 'register', 'logout']);
 
+<<<<<<< HEAD
 // ==========================================
 // DEPENDENCY INJECTIONS & REQUIRE STATEMENTS
 // ==========================================
 
 // File 1 Dependencies (Sub-User & Router)
+=======
+// File 1 Dependencies
+>>>>>>> d8e7900ae2754a76fdc493d2c0a3a30ee9591a04
 require_once BASE_PATH . '/core/eduFlow_Sub_User_Router.php';
 require_once BASE_PATH . '/models/eduFlow_Sub_User_UserModel.php';
 require_once BASE_PATH . '/controllers/eduflow_Sub_User_AuthController.php';
 require_once BASE_PATH . '/controllers/eduFlow_Sub_User_UserController.php';
 
+<<<<<<< HEAD
 // File 2 Dependencies (Auth & Database Config)
 require_once BASE_PATH . '/config/Database.php';
 require_once BASE_PATH . '/controllers/eduflow_auth_User_Controller.php';
@@ -52,6 +57,16 @@ if (isset($_GET['action'])) {
     $action = $_GET['action'] ?? 'home';
 
     $authController = new AuthController();
+=======
+// File 2 Dependencies
+require_once BASE_PATH . '/config/Database.php';
+require_once BASE_PATH . '/controllers/eduflow_auth_User_Controller.php';
+
+// Handle File 2's query string patterns (?action=...)
+if (isset($_GET['action'])) {
+    $authController = new AuthController();
+    $action = $_GET['action'] ?? 'home';
+>>>>>>> d8e7900ae2754a76fdc493d2c0a3a30ee9591a04
 
     switch ($action) {
         case 'home':
@@ -87,21 +102,28 @@ if (isset($_GET['action'])) {
             break;
 
         default:
+<<<<<<< HEAD
             // Fallback to check if your Role Controller handles this request action
             if (class_exists('Controller')) {
                 $roleController = new Controller($pdo);
                 $roleController->handleRequest();
                 exit;
             }
+=======
+>>>>>>> d8e7900ae2754a76fdc493d2c0a3a30ee9591a04
             require BASE_PATH . '/views/eduflow_auth_home.php';
             break;
     }
     exit;
 }
 
+<<<<<<< HEAD
 // ==========================================
 // INITIALIZE ROUTER FOR DIRECT URL ROUTES
 // ==========================================
+=======
+// Initialize Router for direct URL routes
+>>>>>>> d8e7900ae2754a76fdc493d2c0a3a30ee9591a04
 $router = new eduFlow_Sub_User_Router();
 
 // 1. Home Page Route
@@ -173,6 +195,7 @@ $router->add('POST', '/users/update-role',   ['eduFlow_Sub_User_UserController',
 $router->add('GET',  '/profile',        ['eduFlow_Sub_User_UserController', 'profile']);
 $router->add('POST', '/profile/update', ['eduFlow_Sub_User_UserController', 'updateProfile']);
 
+<<<<<<< HEAD
 // ==========================================
 // ROLE MANAGEMENT ROUTES (Your Integration)
 // ==========================================
@@ -194,5 +217,7 @@ $router->add('POST', '/roles/store', function() use ($pdo) {
     $controller->handleRequest();
 });
 
+=======
+>>>>>>> d8e7900ae2754a76fdc493d2c0a3a30ee9591a04
 // Dispatch Incoming Request
 $router->dispatch($_SERVER['REQUEST_URI'], $_SERVER['REQUEST_METHOD']);

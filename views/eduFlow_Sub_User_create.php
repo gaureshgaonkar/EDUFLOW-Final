@@ -20,6 +20,7 @@ require_once __DIR__ . '/../layouts/eduFlow_Sub_User_header.php';
         <label>Phone Number</label>
         <input type="text" name="phone">
 
+<<<<<<< HEAD
        <label>Assign Role</label>
 <select name="role_id" required>
     <option value="">-- Select Role --</option>
@@ -33,6 +34,15 @@ require_once __DIR__ . '/../layouts/eduFlow_Sub_User_header.php';
         <option value="" disabled>⚠️ No roles found in database</option>
     <?php endif; ?>
 </select>
+=======
+        <label>Assign Role</label>
+        <select name="role_id" required>
+            <option value="">-- Select System Role --</option>
+            <?php foreach ($roles as $role): ?>
+                <option value="<?= $role['id'] ?>"><?= htmlspecialchars($role['name']) ?></option>
+            <?php endforeach; ?>
+        </select>
+>>>>>>> d8e7900ae2754a76fdc493d2c0a3a30ee9591a04
 
         <button type="submit" class="btn btn-success" style="width: 100%;">Create User Account</button>
     </form>

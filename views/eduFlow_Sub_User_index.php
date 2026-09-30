@@ -2,9 +2,15 @@
 $pageTitle = "FR-004 User Management - EduFlow";
 require_once __DIR__ . '/../views/eduFlow_Sub_User_header.php'; 
 
+<<<<<<< HEAD
 // Safely calculate summary metrics
 $totalUsers = count($users);
 $activeUsers = count(array_filter($users, fn($u) => isset($u['status']) && $u['status'] === 'active'));
+=======
+// Basic calculation for UI summary metrics
+$totalUsers = count($users);
+$activeUsers = count(array_filter($users, fn($u) => $u['status'] === 'active'));
+>>>>>>> d8e7900ae2754a76fdc493d2c0a3a30ee9591a04
 $inactiveUsers = $totalUsers - $activeUsers;
 ?>
 
@@ -39,7 +45,11 @@ $inactiveUsers = $totalUsers - $activeUsers;
         <div class="form-row">
             <div class="form-group">
                 <label>Full Name</label>
+<<<<<<< HEAD
                 <input type="text" name="full_name" class="form-control" required>
+=======
+                <input type="text" name="full_name" class="form-control"  required>
+>>>>>>> d8e7900ae2754a76fdc493d2c0a3a30ee9591a04
             </div>
             <div class="form-group">
                 <label>Email Address</label>
@@ -52,6 +62,7 @@ $inactiveUsers = $totalUsers - $activeUsers;
             <div class="form-group">
                 <label>Phone Number</label>
                 <input 
+<<<<<<< HEAD
                     type="tel" 
                     id="phone" name="phone" class="form-control" placeholder="Enter 10-digit phone number" pattern="[0-9]{10}"
                     title="Please enter a valid 10-digit mobile number"
@@ -73,6 +84,23 @@ $inactiveUsers = $totalUsers - $activeUsers;
         <option value="" disabled>⚠️ No roles found in database</option>
     <?php endif; ?>
 </select>
+=======
+        type="tel" 
+        id="phone" name="phone" class="form-control" placeholder="Enter 10-digit phone number" pattern="[0-9]{10}"
+        title="Please enter a valid 10-digit mobile number"
+        maxlength="10"
+        required
+    >
+</div>
+            <div class="form-group">
+                <label>Assigned System Role</label>
+                <select name="role_id" required>
+                    <option value="">Select Role...</option>
+                    <?php foreach ($roles as $role): ?>
+                        <option value="<?= $role['id'] ?>"><?= htmlspecialchars($role['name']) ?></option>
+                    <?php endforeach; ?>
+                </select>
+>>>>>>> d8e7900ae2754a76fdc493d2c0a3a30ee9591a04
             </div>
         </div>
         <div style="text-align: right; margin-top: 0.5rem;">
@@ -88,7 +116,11 @@ $inactiveUsers = $totalUsers - $activeUsers;
         <input type="text" id="tableSearch" class="form-control search-box" placeholder="🔍 Search users..." style="margin: 0; width: 260px;">
     </div>
 
+<<<<<<< HEAD
    <div class="table-responsive" style="border: none; border-radius: 0;">
+=======
+    <div class="table-responsive" style="border: none; border-radius: 0;">
+>>>>>>> d8e7900ae2754a76fdc493d2c0a3a30ee9591a04
         <table>
             <thead>
                 <tr>
@@ -101,6 +133,7 @@ $inactiveUsers = $totalUsers - $activeUsers;
             </thead>
             <tbody>
                 <?php foreach ($users as $u): ?>
+<<<<<<< HEAD
                     <?php 
                         $userId = $u['id'] ?? '';
                         $fullName = $u['full_name'] ?? ($u['name'] ?? 'Unknown User');
@@ -113,24 +146,44 @@ $inactiveUsers = $totalUsers - $activeUsers;
                         <td>
                             <div style="font-weight: 600; color: var(--text-primary);"><?= htmlspecialchars($fullName) ?></div>
                             <div style="font-size: 0.775rem; color: var(--text-secondary);"><?= htmlspecialchars($email) ?></div>
+=======
+                    <tr>
+                        <td><strong>#<?= $u['id'] ?></strong></td>
+                        <td>
+                            <div style="font-weight: 600; color: var(--text-primary);"><?= htmlspecialchars($u['full_name']) ?></div>
+                            <div style="font-size: 0.775rem; color: var(--text-secondary);"><?= htmlspecialchars($u['email']) ?></div>
+>>>>>>> d8e7900ae2754a76fdc493d2c0a3a30ee9591a04
                         </td>
                         <td>
                             <!-- Assign Role Form -->
                             <form action="/users/update-role" method="POST" class="form-inline">
                                 <input type="hidden" name="csrf_token" value="<?= $csrfToken ?>">
+<<<<<<< HEAD
                                 <input type="hidden" name="id" value="<?= htmlspecialchars($userId) ?>">
                                 <select name="role_id" onchange="this.form.submit()" style="padding: 0.35rem 0.5rem; margin: 0; font-size: 0.8rem; width: auto;">
                                     <?php foreach ($roles as $r): ?>
                                         <option value="<?= $r['id'] ?>" <?= $r['id'] == $roleId ? 'selected' : '' ?>>
                                             <?= htmlspecialchars($r['role_name'] ?? '') ?>
+=======
+                                <input type="hidden" name="id" value="<?= $u['id'] ?>">
+                                <select name="role_id" onchange="this.form.submit()" style="padding: 0.35rem 0.5rem; margin: 0; font-size: 0.8rem; width: auto;">
+                                    <?php foreach ($roles as $r): ?>
+                                        <option value="<?= $r['id'] ?>" <?= $r['id'] == $u['role_id'] ? 'selected' : '' ?>>
+                                            <?= htmlspecialchars($r['name']) ?>
+>>>>>>> d8e7900ae2754a76fdc493d2c0a3a30ee9591a04
                                         </option>
                                     <?php endforeach; ?>
                                 </select>
                             </form>
                         </td>
                         <td>
+<<<<<<< HEAD
                             <span class="badge badge-<?= htmlspecialchars($status) ?>">
                                 <?= ucfirst($status) ?>
+=======
+                            <span class="badge badge-<?= $u['status'] ?>">
+                                <?= ucfirst($u['status']) ?>
+>>>>>>> d8e7900ae2754a76fdc493d2c0a3a30ee9591a04
                             </span>
                         </td>
                         <td>
@@ -138,17 +191,28 @@ $inactiveUsers = $totalUsers - $activeUsers;
                                 <!-- Toggle Status Form -->
                                 <form action="/users/toggle-status" method="POST" class="form-inline toggle-status-form">
                                     <input type="hidden" name="csrf_token" value="<?= $csrfToken ?>">
+<<<<<<< HEAD
                                     <input type="hidden" name="id" value="<?= htmlspecialchars($userId) ?>">
                                     <input type="hidden" name="status" value="<?= htmlspecialchars($status) ?>">
                                     <button type="submit" class="btn btn-sm btn-outline">
                                         <?= $status === 'active' ? '🚫 Deactivate' : '✅ Activate' ?>
+=======
+                                    <input type="hidden" name="id" value="<?= $u['id'] ?>">
+                                    <input type="hidden" name="status" value="<?= $u['status'] ?>">
+                                    <button type="submit" class="btn btn-sm btn-outline">
+                                        <?= $u['status'] === 'active' ? '🚫 Deactivate' : '✅ Activate' ?>
+>>>>>>> d8e7900ae2754a76fdc493d2c0a3a30ee9591a04
                                     </button>
                                 </form>
 
                                 <!-- Inline Reset Password Form -->
                                 <form action="/users/reset-password" method="POST" class="form-inline">
                                     <input type="hidden" name="csrf_token" value="<?= $csrfToken ?>">
+<<<<<<< HEAD
                                     <input type="hidden" name="id" value="<?= htmlspecialchars($userId) ?>">
+=======
+                                    <input type="hidden" name="id" value="<?= $u['id'] ?>">
+>>>>>>> d8e7900ae2754a76fdc493d2c0a3a30ee9591a04
                                     <input type="password" name="new_password" placeholder="New Password" required style="padding: 0.35rem 0.5rem; margin: 0; font-size: 0.8rem; width: 120px;">
                                     <button type="submit" class="btn btn-sm btn-danger">Reset Pass</button>
                                 </form>

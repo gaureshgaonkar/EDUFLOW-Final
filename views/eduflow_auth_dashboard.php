@@ -84,8 +84,13 @@ $currentAction = $_GET['action'] ?? '';
             <a href="/dashboard" class="sidebar-item <?php echo ($currentUri === '/dashboard' || $currentAction === 'dashboard') ? 'active' : ''; ?>">📊 Dashboard</a>
             
             <div class="sidebar-section-title">Administration</div>
+<<<<<<< HEAD
 <a href="/users" class="sidebar-item <?php echo ($currentUri === '/users') ? 'active' : ''; ?>">👤 User Role</a>
 <a href="/roles" class="sidebar-item <?php echo (strpos(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), '/roles') === 0) ? 'active' : ''; ?>">⚙️ Role Management</a>
+=======
+            <a href="/users" class="sidebar-item <?php echo ($currentUri === '/users') ? 'active' : ''; ?>">👤 User Role</a>
+            <a href="/users" class="sidebar-item">⚙️ Role Management</a>
+>>>>>>> d8e7900ae2754a76fdc493d2c0a3a30ee9591a04
         </aside>
 
         <!-- Main Content Panel -->

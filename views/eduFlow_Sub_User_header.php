@@ -63,16 +63,25 @@ if (session_status() === PHP_SESSION_NONE) {
         
         <!-- Side Navigation Drawer -->
 <aside class="sidebar" id="sidebarNav">
+<<<<<<< HEAD
     <a href="/" class="sidebar-item <?php echo (parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH) === '/') ? 'active' : ''; ?>">🏠 Home</a>
+=======
+    <a href="/" class="sidebar-item">🏠 Home</a>
+>>>>>>> d8e7900ae2754a76fdc493d2c0a3a30ee9591a04
     
     <!-- File 2 Dashboard Link -->
     <a href="/dashboard" class="sidebar-item <?php echo (parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH) === '/dashboard') ? 'active' : ''; ?>">📊 Dashboard</a>
     
     <div class="sidebar-section-title">Administration</div>
+<<<<<<< HEAD
     
     <div class="sidebar-section-title">Administration</div>
 <a href="/users" class="sidebar-item <?php echo ($currentUri === '/users') ? 'active' : ''; ?>">👤 User Role</a>
 <a href="/roles" class="sidebar-item <?php echo (strpos(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), '/roles') === 0) ? 'active' : ''; ?>">⚙️ Role Management</a>
+=======
+    <a href="/users" class="sidebar-item <?php echo (parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH) === '/users') ? 'active' : ''; ?>">👤 User Role</a>
+    <a href="/users" class="sidebar-item">⚙️ Role Management</a>
+>>>>>>> d8e7900ae2754a76fdc493d2c0a3a30ee9591a04
 </aside>
 
         <!-- Main Workspace -->
