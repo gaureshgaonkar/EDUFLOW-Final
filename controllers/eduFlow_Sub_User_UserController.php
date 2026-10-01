@@ -13,7 +13,6 @@ class eduFlow_Sub_User_UserController {
    public function index() {
         if (session_status() === PHP_SESSION_NONE) session_start();
 
-<<<<<<< HEAD
         // Ensure session roles are populated
         $_SESSION['user_id']   = $_SESSION['user_id'] ?? 1;
         $_SESSION['role_id']   = 1;          
@@ -34,7 +33,7 @@ class eduFlow_Sub_User_UserController {
         require_once __DIR__ . '/../views/eduFlow_Sub_User_index.php';
     }
    public function store() {
-=======
+
         // Ensure ALL possible role keys used by AuthMiddleware are populated:
         $_SESSION['user_id']   = $_SESSION['user_id'] ?? 1;
         $_SESSION['role_id']   = 1;          // Role ID 1 (Admin)
@@ -53,7 +52,7 @@ class eduFlow_Sub_User_UserController {
     }
 
     public function store() {
->>>>>>> d8e7900ae2754a76fdc493d2c0a3a30ee9591a04
+
         eduFlow_Sub_User_AuthMiddleware::authorizeRoles([1, 2]);
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -65,35 +64,33 @@ class eduFlow_Sub_User_UserController {
 
             // Validate Phone Number (Allows 10 digits or standard international format)
             if (!empty($phone) && !preg_match('/^[0-9]{10}$/', $phone)) {
-<<<<<<< HEAD
-=======
+
                 // Option 1: Redirect back with error
->>>>>>> d8e7900ae2754a76fdc493d2c0a3a30ee9591a04
+
                 header('Location: /users?error=invalid_phone');
                 exit;
             }
 
-<<<<<<< HEAD
+
             // Attempt to create the user and check for duplicate email errors
             $created = $this->userModel->createUser([
-=======
+
             $this->userModel->createUser([
->>>>>>> d8e7900ae2754a76fdc493d2c0a3a30ee9591a04
+
                 'full_name' => Security::sanitize($_POST['full_name']),
                 'email'     => filter_var($_POST['email'], FILTER_SANITIZE_EMAIL),
                 'password'  => $_POST['password'],
                 'role_id'   => (int)$_POST['role_id'],
                 'phone'     => Security::sanitize($phone)
             ]);
-<<<<<<< HEAD
+
 
             if (!$created) {
                 header('Location: /users?error=email_exists');
                 exit;
             }
 
-=======
->>>>>>> d8e7900ae2754a76fdc493d2c0a3a30ee9591a04
+
             header('Location: /users');
             exit;
         }
