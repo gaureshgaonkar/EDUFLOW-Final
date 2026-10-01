@@ -7,12 +7,10 @@ class Database {
         $host = "localhost";
         $db_name = "eduflow_db";
         $username = "root";
-<<<<<<< HEAD
+
         $password = "Barkelo@16";
         
-=======
-        $password = "";
->>>>>>> d8e7900ae2754a76fdc493d2c0a3a30ee9591a04
+
 
         try {
             $this->conn = new PDO("mysql:host=" . $host . ";dbname=" . $db_name, $username, $password);
